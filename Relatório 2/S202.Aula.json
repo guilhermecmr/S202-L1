@@ -1,0 +1,69 @@
+[{
+  "_id": {
+    "$oid": "66bbb63e42052edf49ad845f"
+  },
+  "assunto": "Qualidade de Software",
+  "professor": {
+    "nome": "Chris"
+  },
+  "alunos": [
+    {
+      "nome": "Gabriel"
+    },
+    {
+      "nome": "Jorge"
+    },
+    {
+      "nome": "Marcelo"
+    },
+    {
+      "nome": "Jonas"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66bbb64742052edf49ad8460"
+  },
+  "assunto": "Algoritmos I",
+  "professor": {
+    "nome": "Carlos Alberto"
+  },
+  "alunos": [
+    {
+      "nome": "Leandro"
+    },
+    {
+      "nome": "Raphael"
+    },
+    {
+      "nome": "Matheus"
+    },
+    {
+      "nome": "Leonardo"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66bbb64b42052edf49ad8461"
+  },
+  "assunto": "Matematica Discreta",
+  "professor": {
+    "nome": "Marcelo"
+  },
+  "alunos": [
+    {
+      "nome": "Yago"
+    },
+    {
+      "nome": "Rafael"
+    },
+    {
+      "nome": "Gustavo"
+    },
+    {
+      "nome": "Guilherme"
+    }
+  ]
+}]
