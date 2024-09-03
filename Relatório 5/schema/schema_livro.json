@@ -1,0 +1,34 @@
+{
+    "$jsonSchema": {
+        "bsonType": "object",
+        "required": [
+            "_id",
+            "titulo", 
+            "autor", 
+            "ano", 
+            "preco"
+        ],
+        "properties": {
+            "_id": {
+                "bsonType": "int",
+                "description": "deve ser um int e é obrigatório"
+            },
+            "titulo": {
+                "bsonType": "string",
+                "description": "deve ser uma string e é obrigatória"
+            },
+            "autor": {
+                "bsonType": "string",
+                "description": "deve ser uma string e é obrigatória"
+            },
+            "ano": {
+                "bsonType": "int",
+                "description": "deve ser um inteiro e é obrigatório"
+            },
+            "preco": {
+                "bsonType": "double",
+                "description": "deve ser um double e é obrigatório"
+            }
+        }
+    }
+}
