@@ -1,0 +1,47 @@
+{
+    "bsonType": "object",
+    "required": ["nota", "corridas"],
+    "properties": {
+      "nota": {
+        "bsonType": "int",
+        "description": "Nota do motorista"
+      },
+      "corridas": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": ["nota", "distancia", "valor", "passageiro"],
+          "properties": {
+            "nota": {
+              "bsonType": "int",
+              "description": "Nota da corrida"
+            },
+            "distancia": {
+              "bsonType": "double",
+              "description": "Distância da corrida"
+            },
+            "valor": {
+              "bsonType": "double",
+              "description": "Valor da corrida"
+            },
+            "passageiro": {
+              "bsonType": "object",
+              "required": ["nome", "documento"],
+              "properties": {
+                "nome": {
+                  "bsonType": "string",
+                  "description": "Nome do passageiro"
+                },
+                "documento": {
+                  "bsonType": "string",
+                  "description": "Documento do passageiro"
+                }
+              }
+            }
+          }
+        },
+        "description": "Lista de corridas realizadas pelo motorista"
+      }
+    }
+  }
+  
