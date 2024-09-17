@@ -55,10 +55,10 @@ class MotoristaDAO:
                     print(f"   Nome: {nome}")
                     print(f"   Documento: {documento}")
             else:
-                print("Motorista não encontrado.")
+                print("\nMotorista não encontrado.")
             return result
         except Exception as e:
-            print(f"Erro ao ler motorista: {e}")
+            print(f"\nErro ao ler motorista: {e}")
             return None
 
     def update_motorista(self, id: str, dado_update: dict):

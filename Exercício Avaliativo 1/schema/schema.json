@@ -1,7 +1,15 @@
 {
+  "$jsonSchema": {
     "bsonType": "object",
-    "required": ["nota", "corridas"],
+    "required": [
+      "nota",
+      "corridas"
+    ],
     "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "ID do documento"
+      },
       "nota": {
         "bsonType": "int",
         "description": "Nota do motorista"
@@ -10,7 +18,12 @@
         "bsonType": "array",
         "items": {
           "bsonType": "object",
-          "required": ["nota", "distancia", "valor", "passageiro"],
+          "required": [
+            "nota",
+            "distancia",
+            "valor",
+            "passageiro"
+          ],
           "properties": {
             "nota": {
               "bsonType": "int",
@@ -26,7 +39,10 @@
             },
             "passageiro": {
               "bsonType": "object",
-              "required": ["nome", "documento"],
+              "required": [
+                "nome",
+                "documento"
+              ],
               "properties": {
                 "nome": {
                   "bsonType": "string",
@@ -40,8 +56,8 @@
             }
           }
         },
-        "description": "Lista de corridas realizadas pelo motorista"
+        "description": "Lista de corridas associadas"
       }
     }
   }
-  
+}
