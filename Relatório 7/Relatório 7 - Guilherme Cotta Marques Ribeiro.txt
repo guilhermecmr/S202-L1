@@ -1,0 +1,71 @@
+Guilherme Cotta Marques Ribeiro - GES - 434
+Relatório 7
+
+-Agregações:
+1. Número total de aeroportos
+MATCH (a:Airport)
+RETURN COUNT(a) AS total_aeroportos;
+
+2. Soma da altitude dos aeroportos
+MATCH (a:Airport)
+RETURN SUM(a.altitude) AS soma_altitudes;
+
+3. Média da altitude dos aeroportos
+MATCH (a:Airport)
+RETURN AVG(a.altitude) AS media_altitudes;
+
+4. Aeroporto de maior altitude
+MATCH (a:Airport)
+RETURN MAX(a.altitude) AS maior_altitude;
+
+5. Aeroporto de menor altitude
+MATCH (a:Airport)
+RETURN MIN(a.altitude) AS menor_altitude;
+
+-Funções matemáticas:
+1. Obtém a altitude absoluta do Orlando International Airport
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN ABS(a.altitude) AS altitude_absoluta;
+
+2. Arredonda a pagerank do Orlando International Airport para o valor mais alto
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN CEIL(a.pagerank) AS pagerank_arredondada;
+
+3. Arredondar a distância de uma rota entre dois aeroportos
+MATCH (a1:Airport {iata: "MCO"})-[r:HAS_ROUTE]->(a2:Airport {iata: "ORD"})
+RETURN ROUND(r.distance, 1) AS distancia_arredondada;
+
+4. Arredondar a distância de uma rota entre dois aeroportos para o valor mais baixo
+MATCH (a1:Airport {iata: "MCO"})-[r:HAS_ROUTE]->(a2:Airport {iata: "ORD"})
+RETURN FLOOR(r.distance) AS distancia_arredondada;
+
+5. Retorna o sinal da altitude do Orlando International Airport
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN SIGN(a.altitude) AS sinal_altitude;
+
+-Funções de String:
+1. Converter o nome do Orlando International Airport para maiúsculas
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN TOUPPER(a.descr) AS nome_maiusculo;
+
+2. Converter o nome de Orlando para minúsculas
+MATCH (c:City {name: "Orlando"})
+RETURN TOLOWER(c.name) AS nome_minusculo;
+
+3. Obter as três primeiras letras do nome do Orlando International Airport
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN LEFT(a.descr, 3) AS prefixo_aeroporto;
+
+4. Obter as duas últimas letras do código IATA do Orlando International Airport
+MATCH (a:Airport {descr: "Orlando International Airport"})
+RETURN RIGHT(a.iata, 2) AS sufixo_iata;
+
+5. Substituir todas as ocorrências de 'International' por 'Intl' no nome dos aeroportos
+MATCH (a:Airport)
+RETURN REPLACE(a.descr, "International", "Intl") AS nome_abreviado;
+
+
+
+
+
+

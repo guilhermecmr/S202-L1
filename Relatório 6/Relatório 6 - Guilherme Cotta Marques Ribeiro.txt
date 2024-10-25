@@ -1,0 +1,23 @@
+Questão 1)
+1. MATCH (n) RETURN n;
+2. MATCH (g:Game) WHERE g.ano > 2012 RETURN g;
+3. MATCH (g:Game) WHERE g.genero = 'Terror' RETURN g;
+4. MATCH (j:Jurado)-[r:JOGOU]->(g:Game) WHERE r.nota >= 7 RETURN g, r.nota;
+
+Questão 2)
+1.
+CREATE(g:Game{titulo:'Castlevania: Symphony of the Night',genero:'Metroidvania',ano:1997});
+CREATE(g:Game{titulo:'Murder House',genero:'Terror',ano:2020});
+CREATE(g:Game{titulo:'Mermaid Swamp',genero:'Terror',ano:2013});
+CREATE(g:Game{titulo:'Cyberpunk 2077',genero:'RPG',ano:2020});
+2.
+CREATE(j:Jurado{nome:'Jorge'});
+CREATE(j:Jurado{nome:'Marcelo'});
+CREATE(j:Jurado{nome:'Augusto'});
+3.
+MATCH(j:Jurado{nome:'Jorge'}),(g:Game{titulo:'Symphony of the Night'}) CREATE(j)-[:JOGOU{nota:10, horas:500}]->(g);
+MATCH(j:Jurado{nome:'Jorge'}),(g:Game{titulo:'Murder House'}) CREATE(j)-[:JOGOU{nota:9, horas:100}]->(g);
+MATCH(j:Jurado{nome:'Marcelo'}),(g:Game{titulo:'Mermaid Swamp'}) CREATE(j)-[:JOGOU{nota:8, horas:200}]->(g);
+MATCH(j:Jurado{nome:'Marcelo'}),(g:Game{titulo:'Symphony of the Night'}) CREATE(j)-[:JOGOU{nota:10, horas:3000}]->(g);
+MATCH(j:Jurado{nome:'Augusto'}),(g:Game{titulo:'Cyberpunk 2077'}) CREATE(j)-[:JOGOU{nota:8, horas:100}]->(g);
+MATCH(j:Jurado{nome:'Augusto'}),(g:Game{titulo:'Phasmophobia'}) CREATE(j)-[:JOGOU{nota:8, horas:50}]->(g);
