@@ -2,7 +2,7 @@ from database.database import Database
 from crud.crud import FilmesCRUD
 from cli.cli import FilmesCLI
 
-db = Database("bolt://98.80.167.84", "neo4j", "occurrences-incentive-kites")
+db = Database("bolt://44.200.118.211", "neo4j", "expenditures-patch-distances")
 filmes_crud = FilmesCRUD(db)
 filmes_cli = FilmesCLI(filmes_crud)
 

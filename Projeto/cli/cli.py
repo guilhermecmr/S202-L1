@@ -40,7 +40,7 @@ class FilmesCLI:
             else:
                 print("Opcao invalida!")
 
-    def create_filme(self):
+    def create_filme(self): # Perfeito
         titulo = input("\nTitulo: ")
         ano = input("Ano: ")
         genero = input("Genero: ")
@@ -49,7 +49,7 @@ class FilmesCLI:
         self.filmes_crud.create_filme(filme)
         print("Filme criado com sucesso!")
     
-    def create_membro(self):
+    def create_membro(self): # Perfeito
         nome = input("\nNome: ")
         ano_nasc = input("Ano de nascimento: ")
         nacionalidade = input("Nacionalidade: ")
@@ -71,40 +71,99 @@ class FilmesCLI:
         else:
             print("Diretor criado com sucesso!")
     
-    def create_relacionamento(self):
+    def create_relacionamento(self): # Perfeito
         nome_filme = input("Nome do filme: ")
-        nome_membro = input("Nome do ator/diretor: ")
-        self.filmes_crud.create_relacionamento(nome_filme, nome_membro)
+        while True:
+            cargo = input("1- Ator\n2- Diretor\nOpcao: ")
+            if cargo == "1":
+                nome_membro = input("Nome do ator: ")
+                relacionamento = "ATUOU"
+                break
+            elif cargo == "2":
+                nome_membro = input("Nome do diretor: ")
+                relacionamento = "DIRIGIU"
+                break
+            else:
+                print("Opcao invalida!")
+        
+        self.filmes_crud.create_relacionamento(nome_filme, nome_membro, relacionamento)
         print("Atribuicao criada com sucesso!")
     
-    def read_filme_membro(self): #################
+    def read_filme_membro(self): # Perfeito
         name = input("\nNome do filme: ")
         print(f"Retorno de {name}:")
-        filme = self.filme_crud.read(name)
-        return filme
-    
-    def read_ator_diretor(self): #################
-        name = input("\nNome do ator/diretor: ")
-        print(f"Retorno de {name}:")
-        ator_diretor = self.ator_diretor_crud.read(name)
-        return ator_diretor
-    
+        retorno = self.filmes_crud.read(name)
+        if retorno:
+            if isinstance(retorno, Filme):
+                print(f"Titulo: {retorno.titulo}")
+                print(f"Ano: {retorno.ano}")
+                print(f"Genero: {retorno.genero}")
+                print(f"Duracao: {retorno.duracao}")
+                membros = self.filmes_crud.get_membros_por_filme(name)
+                if membros["diretores"]:
+                    print("Diretores:")
+                    for diretor in membros["diretores"]:
+                        print(diretor)
+                else:
+                    print("Diretores:")
+                    print("Nenhum diretor encontrado.")
+                if membros["atores"]:
+                    print("Atores:")
+                    for ator in membros["atores"]:
+                        print(ator)
+                else:
+                    print("Atores:")
+                    print("Nenhum ator encontrado.")
+            elif isinstance(retorno, Membro):
+                print(f"Nome: {retorno.nome}")
+                print(f"Ano de nascimento: {retorno.ano_nasc}")
+                print(f"Nacionalidade: {retorno.nacionalidade}")
+                print(f"Anos de carreira: {retorno.anos_carreira}")
+                print(f"Tipo: {retorno.tipo}")
+                filmes = self.filmes_crud.get_filmes_por_membro(name)
+                if filmes:
+                    print("Filmes:")
+                    for filme in filmes:
+                        print(filme)
+                else:
+                    print("Filmes:")
+                    print("Nenhum filme encontrado.")
+        else:
+            print(f"{name} nao foi encontrado.")
+
+
     def update_filme(self): #################
         name = input("\nNome do filme: ")
-        newAno = input("Ano: ")
-        filme = self.filme_crud.update(name, newAno)
+        novo_ano = input("Novo ano: ")
+        novo_genero = input("Novo genero: ")    
+        nova_duracao = input("Nova duracao: ")
+        novo_filme = Filme(name, novo_ano, novo_genero, nova_duracao)
+        self.filmes_crud.update_filme(novo_filme)
         print("Filme atualizado com sucesso!")
-        return filme
     
     def update_membro(self): #################
         name = input("\nNome do ator/diretor: ")
-        newCpf = input("CPF: ")
-        ator_diretor = self.ator_diretor_crud.update(name, newCpf)
-        print("Ator/Diretor atualizado com sucesso!")
-        return ator_diretor
+        novo_ano_nasc = input("Novo ano de nascimento: ")
+        nova_nacionalidade = input("Nova nacionalidade: ")
+        novos_anos_carreira = input("Novos anos de carreira: ")
+        while True:
+            cargo = input("1- Ator\n2- Diretor\nOpcao: ")
+            if cargo == "1":
+                novo_tipo = "Ator"
+                break
+            elif cargo == "2":
+                novo_tipo = "Diretor"
+                break
+            else:
+                print("Opcao invalida!")
+        novo_membro = Membro(name, novo_ano_nasc, nova_nacionalidade, novos_anos_carreira, novo_tipo)
+        self.filmes_crud.update_membro(novo_membro)
+        if cargo == "1":
+            print("Ator atualizado com sucesso!")
+        else:
+            print("Diretor atualizado com sucesso!")
     
     def delete_filme_membro(self): #################
         name = input("\nNome do filme/ator/diretor: ")
-        filme_ator_diretor = self.filme_ator_diretor_crud.delete(name)
-        print("Filme/Ator/Diretor removido com sucesso!")
-        return filme_ator_diretor
+        self.filmes_crud.delete(name)
+        print(f"{name} removido com sucesso!")
