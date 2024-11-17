@@ -5,14 +5,14 @@ class FilmesCRUD:
     def __init__(self, db):
         self.db = db
 
-    def create_filme(self, filme: Filme): # Perfeito
+    def create_filme(self, filme: Filme): 
         query = """
-        CREATE (f:Filme {titulo: $titulo, ano: $ano, genero: $genero, duracao: $duracao})
+        CREATE (f:Filme {nome: $nome, ano: $ano, genero: $genero, duracao: $duracao})
         """
-        parameters = {"titulo": filme.titulo, "ano": filme.ano, "genero": filme.genero, "duracao": filme.duracao}
+        parameters = {"nome": filme.nome, "ano": filme.ano, "genero": filme.genero, "duracao": filme.duracao}
         self.db.query(query, parameters)
 
-    def create_membro(self, membro: Membro): # Perfeito
+    def create_membro(self, membro: Membro):
         query = """
         CREATE (m:Membro {nome: $nome, ano_nasc: $ano_nasc, nacionalidade: $nacionalidade, 
                           anos_carreira: $anos_carreira, tipo: $tipo})
@@ -21,30 +21,27 @@ class FilmesCRUD:
                       "anos_carreira": membro.anos_carreira, "tipo": membro.tipo}
         self.db.query(query, parameters)
 
-    def create_relacionamento(self, nome_filme: str, nome_membro: str, relacao: str): # Perfeito
+    def create_relacionamento(self, nome_filme: str, nome_membro: str, relacao: str): 
         query = f"""
-        MATCH (f:Filme {{nome: $titulo}})
-        MATCH (m:Membro {{nome: $nome}})
+        MATCH (f:Filme {{nome: $nome_filme}})
+        MATCH (m:Membro {{nome: $nome_membro}})
         CREATE (m)-[:{relacao}]->(f)
         """
-        parameters = {"titulo": nome_filme, "nome": nome_membro}
+        parameters = {"nome_filme": nome_filme, "nome_membro": nome_membro}
         self.db.query(query, parameters)
 
-    def read(self, name: str): # Perfeito
+    def read(self, name: str):
         query = """
         MATCH (n {nome: $name}) 
         RETURN n, labels(n) AS labels
         """
         parameters = {"name": name}
-        result = self.db.query(query, parameters)
-        records = list(result)
-        labels = records[0]["labels"]
-        if not records:
-            return None
-        node = records[0]["n"]
+        result = list(self.db.query(query, parameters))
+        labels = result[0]["labels"]
+        node = result[0]["n"]
         if "Filme" in labels:
             return Filme(
-                nome=node["titulo"],
+                nome=node["nome"],
                 ano=node["ano"],
                 genero=node["genero"],
                 duracao=node["duracao"]
@@ -60,57 +57,48 @@ class FilmesCRUD:
         else:
             return None
 
-    def get_filmes_por_membro(self, nome: str): # Perfeito
+    def get_filmes_por_membro(self, nome: str): 
             query = """
             MATCH (m:Membro {nome: $nome})
             OPTIONAL MATCH (m)-[r]->(f:Filme)
-            RETURN type(r) AS relacao, f.nome AS titulo, m.tipo AS tipo
+            RETURN type(r) AS relacao, f.nome AS nome
             """
             parameters = {"nome": nome}
             result = self.db.query(query, parameters)
-
             filmes = []
             for record in result:
-                tipo_membro = record["tipo"]
                 relacao = record["relacao"]
-                titulo = record["titulo"]
-
-                if tipo_membro == "Ator" and relacao == "ATUOU":
-                    filmes.append(titulo)
-                elif tipo_membro == "Diretor" and relacao == "DIRIGIU":
-                    filmes.append(titulo)
-
+                nome = record["nome"]
+                if relacao == "ATUOU":
+                    filmes.append(nome)
+                elif relacao == "DIRIGIU":
+                    filmes.append(nome)
             return filmes
 
-    def get_membros_por_filme(self, titulo: str): # Perfeito
+    def get_membros_por_filme(self, nome: str): 
         query = """
-        MATCH (m:Membro)-[r]->(f:Filme {titulo: $titulo})
-        RETURN m.nome AS nome, m.tipo AS tipo, type(r) AS relacao
+        MATCH (m:Membro)-[r]->(f:Filme {nome: $nome})
+        RETURN m.nome AS nome, type(r) AS relacao
         """
-        parameters = {"titulo": titulo}
+        parameters = {"nome": nome}
         result = self.db.query(query, parameters)
-
         diretores = []
         atores = []
-
         for record in result:
             nome = record["nome"]
-            tipo = record["tipo"]
             relacao = record["relacao"]
-
-            if relacao == "DIRIGIU" and tipo == "Diretor":
+            if relacao == "DIRIGIU":
                 diretores.append(nome)
-            elif relacao == "ATUOU" and tipo == "Ator":
+            elif relacao == "ATUOU":
                 atores.append(nome)
-
         return {"diretores": diretores, "atores": atores}
 
     def update_filme(self, filme: Filme):
         query = """
-        MATCH (f:Filme {titulo: $titulo})
+        MATCH (f:Filme {nome: $nome})
         SET f.ano = $ano, f.genero = $genero, f.duracao = $duracao
         """
-        parameters = {"titulo": filme.titulo, "ano": filme.ano, "genero": filme.genero, "duracao": filme.duracao}
+        parameters = {"nome": filme.nome, "ano": filme.ano, "genero": filme.genero, "duracao": filme.duracao}
         self.db.query(query, parameters)
 
     def update_membro(self, membro: Membro):
@@ -129,3 +117,89 @@ class FilmesCRUD:
         """
         parameters = {"name": name}
         self.db.query(query, parameters)
+
+    def filme_existe(self, nome: str) -> bool:
+        query = """
+        MATCH (f:Filme {nome: $nome})
+        RETURN COUNT(f) > 0 AS existe
+        """
+        parameters = {"nome": nome}
+        result = self.db.query(query, parameters)
+        if result:
+            return result[0]["existe"]
+        return False
+
+    def membro_existe(self, nome: str) -> bool:
+        query = """
+        MATCH (m:Membro {nome: $nome})
+        RETURN COUNT(m) > 0 AS existe
+        """
+        parameters = {"nome": nome}
+        result = self.db.query(query, parameters)
+        if result:
+            return result[0]["existe"]
+        return False
+
+    def media_anos_carreira(self):
+        query = """
+        MATCH (m:Membro)
+        RETURN CEIL(AVG(m.anos_carreira)) AS media
+        """
+        result = self.db.query(query)
+        return result[0]["media"]
+    
+    def numero_filmes(self):
+        query = """
+        MATCH (f:Filme)
+        RETURN COUNT(f) AS numero
+        """
+        result = self.db.query(query)
+        return result[0]["numero"]
+    
+    def numero_atores(self):
+        query = """
+        MATCH (m:Membro {tipo: "Ator"})
+        RETURN COUNT(m) AS numero
+        """
+        result = self.db.query(query)
+        return result[0]["numero"]
+    
+    def numero_diretores(self):
+        query = """
+        MATCH (m:Membro {tipo: "Diretor"})
+        RETURN COUNT(m) AS numero
+        """
+        result = self.db.query(query)
+        return result[0]["numero"]
+    
+    def media_duracao(self):
+        query = """
+        MATCH (f:Filme)
+        RETURN AVG(f.duracao) AS media
+        """
+        result = self.db.query(query)
+        return result[0]["media"]
+    
+    def maior_duracao(self):
+        query = """
+        MATCH (f:Filme)
+        RETURN MAX(f.duracao) AS maior
+        """
+        result = self.db.query(query)
+        return result[0]["maior"]
+    
+    def menor_duracao(self):
+        query = """
+        MATCH (f:Filme)
+        RETURN MIN(f.duracao) AS menor
+        """
+        result = self.db.query(query)
+        return result[0]["menor"]
+    
+    def filmes_por_genero(self):
+        query = """
+        MATCH (f:Filme)
+        RETURN f.genero AS genero, COUNT(f) AS numero
+        """
+        result = self.db.query(query)
+        return [record for record in result]  
