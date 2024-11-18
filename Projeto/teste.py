@@ -1,4 +1,10 @@
+import os
+import time
 from neo4j import GraphDatabase
+from unittest.mock import patch
+from database.database import Database
+from crud.crud import FilmesCRUD
+from cli.cli import FilmesCLI
 
 class Neo4jHandler:
     def __init__(self, uri, user, password):
@@ -15,7 +21,9 @@ class Neo4jHandler:
         query = "MATCH (n) DETACH DELETE n"
         self.execute_query(query)
 
+
 def dados_teste():
+    os.system("cls" if os.name == "nt" else "clear")
     uri = "bolt://44.200.118.211"  
     user = "neo4j"  
     password = "expenditures-patch-distances"  
@@ -85,3 +93,32 @@ def dados_teste():
     finally:
         db.close()
         print("Conexão fechada.")
+        os.system("cls" if os.name == "nt" else "clear")
+
+def input_teste(filmes_cli):
+    with open("input_teste.txt", 'r') as file:
+        lines = file.readlines()
+    inputs = iter(line.rstrip("\n") for line in lines)
+    def input_with_delay(prompt):
+        time.sleep(0.1)  
+        print(prompt, end='') 
+        response = next(inputs, "9")  
+        print(response) 
+        return response 
+    with patch('builtins.input', input_with_delay):
+        filmes_cli.menu()
+
+db = Database("bolt://44.200.118.211", "neo4j", "expenditures-patch-distances")
+filmes_crud = FilmesCRUD(db)
+
+def main():
+    dados_teste()
+    filmes_cli = FilmesCLI(filmes_crud)
+    opcao = input("Utilizar inputs de teste? (y/n)\n")
+    if opcao == "y":
+        input_teste(filmes_cli)
+    else:
+        filmes_cli.menu()
+
+if __name__ == "__main__":
+    main()

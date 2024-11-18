@@ -1,0 +1,193 @@
+666
+a
+1
+Filme teste (diretor-diretor ator-ator)
+2024
+Horror
+93
+
+1
+Filme teste (diretor-diretor)
+2023
+Comedy
+120
+1
+Filme teste (ator-ator)
+2022
+Sci-fi
+141
+1
+Filme teste (diretor-ator ator-diretor)
+2021
+Action
+87
+1
+Filme teste (nada)
+2020
+Adventure
+74
+1
+Teste bugado
+Teste bugado
+1
+Teste bugado
+666
+666
+1
+Teste bugado
+666
+Teste bugado
+Teste bugado
+1
+Filme teste (diretor-diretor ator-ator)
+2
+Ator teste
+2000
+Russia
+4
+3
+
+4
+1
+2
+Diretor teste
+1995
+Brasil
+8
+2
+2
+Ator teste sem nada
+1990
+Brasil
+10
+1
+2
+Diretor teste sem nada
+1992
+Brasil
+11
+2
+2
+666
+2
+Teste bugado
+Teste bugado
+2
+Teste bugado
+666
+666
+2
+Teste bugado
+666
+Teste bugado
+Teste bugado
+2
+Diretor teste
+2
+Ator teste
+2
+Filme teste (nada)
+1990
+Brasil
+10
+1
+1
+Ator teste
+2024
+Horror
+93
+1
+Diretor teste
+2024
+Horror
+93
+3
+Teste nao funciona
+3
+Filme teste (diretor-diretor ator-ator)
+1
+Teste nao funciona
+3
+Filme teste (diretor-diretor ator-ator)
+2
+Teste nao funciona
+3
+Filme teste (diretor-diretor ator-ator)
+1
+Ator teste
+3
+Filme teste (diretor-diretor ator-ator)
+2
+Diretor teste
+3
+Filme teste (diretor-diretor ator-ator)
+2
+Diretor teste
+3
+Filme teste (diretor-diretor)
+2
+Diretor teste
+3
+Filme teste (ator-ator)
+1
+Ator teste
+3
+Filme teste (diretor-ator ator-diretor)
+1
+Diretor teste
+3
+Filme teste (diretor-ator ator-diretor)
+2
+Ator teste
+4
+Filme teste (diretor-diretor ator-ator)
+4
+Filme teste (diretor-diretor)
+4
+Filme teste (ator-ator)
+4
+Filme teste (diretor-ator ator-diretor)
+4
+Filme teste (nada)
+4
+666
+4
+Diretor teste
+4
+Ator teste
+4
+Ator teste sem nada
+4
+Diretor teste
+5
+6
+Filme teste (nada)
+2025
+Romance
+143
+4
+7
+Diretor teste sem nada
+2003
+China
+6
+1
+4
+Diretor teste sem nada
+7
+Ator teste sem nada
+2007
+Bielorussia
+3
+2
+4
+Ator teste sem nada
+8
+Diretor teste sem nada
+4
+Diretor teste sem nada
+8
+Filme teste (nada)
+4
+Filme teste (nada)
+9

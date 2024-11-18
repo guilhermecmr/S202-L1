@@ -50,21 +50,42 @@ class FilmesCLI:
             print("Filme ja cadastrado!")
             return
         ano = input("Ano: ")
+        if ano.isnumeric() == False:
+            print("Ano invalido!")
+            return
         genero = input("Genero: ")
+        if genero.isnumeric() == True:
+            print("Genero invalido!")
+            return
         duracao = input("Duracao: ")
-        filme = Filme(titulo, ano, genero, duracao)
+        if duracao.isnumeric() == False:
+            print("Duracao invalida!")
+            return
+        filme = Filme(titulo, int(ano), genero, int(duracao))
         self.filmes_crud.create_filme(filme)
         print("Filme criado com sucesso!")
     
     def create_membro(self):
         nome = input("\nNome: ")
+        if nome.isnumeric() == True:
+            print("Nome invalido!")
+            return
         existe = self.filmes_crud.membro_existe(nome)
         if existe:
             print("Ator/diretor ja cadastrado!")
             return
         ano_nasc = input("Ano de nascimento: ")
+        if ano_nasc.isnumeric() == False:
+            print("Ano de nascimento invalido!")
+            return
         nacionalidade = input("Nacionalidade: ")
+        if nacionalidade.isnumeric() == True:
+            print("Nacionalidade invalida!")
+            return
         anos_carreira = input("Anos de carreira: ")
+        if anos_carreira.isnumeric() == False:
+            print("Anos de carreira invalidos!")
+            return
         while True:
             cargo = input("1- Ator\n2- Diretor\nOpcao: ")
             if cargo == "1":
@@ -75,7 +96,7 @@ class FilmesCLI:
                 break
             else:
                 print("Opcao invalida!")
-        membro = Membro(nome, ano_nasc, nacionalidade, anos_carreira, tipo)
+        membro = Membro(nome, int(ano_nasc), nacionalidade, int(anos_carreira), tipo)
         self.filmes_crud.create_membro(membro)
         if cargo == "1":
             print("Ator criado com sucesso!")
@@ -160,9 +181,18 @@ class FilmesCLI:
             print("Filme nao encontrado!")
             return
         novo_ano = input("Novo ano: ")
+        if novo_ano.isnumeric() == False:
+            print("Ano invalido!")
+            return
         novo_genero = input("Novo genero: ")    
+        if novo_genero.isnumeric() == True:
+            print("Genero invalido!")
+            return
         nova_duracao = input("Nova duracao: ")
-        novo_filme = Filme(name, novo_ano, novo_genero, nova_duracao)
+        if nova_duracao.isnumeric() == False:
+            print("Duracao invalida!")
+            return
+        novo_filme = Filme(name, int(novo_ano), novo_genero, int(nova_duracao))
         self.filmes_crud.update_filme(novo_filme)
         print("Filme atualizado com sucesso!")
     
@@ -173,8 +203,17 @@ class FilmesCLI:
             print("Ator/diretor nao encontrado!")
             return
         novo_ano_nasc = input("Novo ano de nascimento: ")
+        if novo_ano_nasc.isnumeric() == False:
+            print("Ano de nascimento invalido!")
+            return
         nova_nacionalidade = input("Nova nacionalidade: ")
+        if nova_nacionalidade.isnumeric() == True:
+            print("Nacionalidade invalida!")
+            return
         novos_anos_carreira = input("Novos anos de carreira: ")
+        if novos_anos_carreira.isnumeric() == False:
+            print("Anos de carreira invalidos!")
+            return
         while True:
             cargo = input("1- Ator\n2- Diretor\nOpcao: ")
             if cargo == "1":
@@ -185,7 +224,7 @@ class FilmesCLI:
                 break
             else:
                 print("Opcao invalida!")
-        novo_membro = Membro(name, novo_ano_nasc, nova_nacionalidade, novos_anos_carreira, novo_tipo)
+        novo_membro = Membro(name, int(novo_ano_nasc), nova_nacionalidade, int(novos_anos_carreira), novo_tipo)
         self.filmes_crud.update_membro(novo_membro)
         if cargo == "1":
             print("Ator atualizado com sucesso!")
