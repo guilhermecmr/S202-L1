@@ -15,7 +15,8 @@ class Neo4jHandler:
     
     def execute_query(self, query, parameters=None):
         with self.driver.session() as session:
-            return session.run(query, parameters)
+            result = session.run(query, parameters)
+            return [record for record in result]
     
     def clear_database(self):
         query = "MATCH (n) DETACH DELETE n"
@@ -24,10 +25,14 @@ class Neo4jHandler:
 
 def dados_teste():
     os.system("cls" if os.name == "nt" else "clear")
-    uri = "bolt://44.200.118.211"  
+    uri = "bolt://35.173.231.119"  
     user = "neo4j"  
-    password = "expenditures-patch-distances"  
-    db = Neo4jHandler(uri, user, password)
+    password = "crusts-knock-oscillators"  
+    try:
+        db = Neo4jHandler(uri, user, password)
+    except Exception as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return
     
     try:
         print("Limpando a base de dados...")
@@ -108,13 +113,14 @@ def input_teste(filmes_cli):
     with patch('builtins.input', input_with_delay):
         filmes_cli.menu()
 
-db = Database("bolt://44.200.118.211", "neo4j", "expenditures-patch-distances")
+db = Database("bolt://35.173.231.119", "neo4j", "crusts-knock-oscillators")
 filmes_crud = FilmesCRUD(db)
 
 def main():
     dados_teste()
     filmes_cli = FilmesCLI(filmes_crud)
     opcao = input("Utilizar inputs de teste? (y/n)\n")
+    os.system("cls" if os.name == "nt" else "clear")
     if opcao == "y":
         input_teste(filmes_cli)
     else:
